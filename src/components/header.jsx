@@ -1,13 +1,3 @@
-// import React, { useState } from "react";
-// import { Link } from "react-router-dom";
-// import { Button } from "./ui/button";
-// import {
-//   SignedIn,
-//   SignedOut,
-//   SignInButton,
-//   UserButton,
-// } from "@clerk/clerk-react";
-
 import { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import {
@@ -24,25 +14,26 @@ const Header = () => {
   const [showSignIn, setShowSignIn] = useState(false);
 
   const [search, setSearch] = useSearchParams();
+  const { user } = useUser();
 
   useEffect(() => {
     if (search.get("sign-in")) {
       setShowSignIn(true);
-      setSearch({});
     }
   }, [search]);
 
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
       setShowSignIn(false);
+      setSearch({});
     }
   };
 
   return (
     <>
       <nav className="py-4 flex justify-between items-center">
-        <Link>
-          <img src="/logo.png" className="h-20" />
+        <Link to="/">
+          <img src="/logo.png" className="h-20" alt="Hirrd Logo" />
         </Link>
 
         <div className="flex gap-8">
@@ -52,12 +43,14 @@ const Header = () => {
             </Button>
           </SignedOut>
           <SignedIn>
-            <Button variant="destructive" className="rounded-full">
-              <PenBox size={20} className="mr-2" />
-              Post a Job
-            </Button>
-
-            <Link to="/post-job"></Link>
+            {user?.unsafeMetadata?.role === "recruiter" && (
+              <Link to="/post-job">
+                <Button variant="destructive" className="rounded-full">
+                  <PenBox size={20} className="mr-2" />
+                  Post a Job
+                </Button>
+              </Link>
+            )}
             <UserButton
               appearance={{
                 elements: {
