@@ -33,12 +33,23 @@ const Header = () => {
     <>
       <nav className="py-4 flex justify-between items-center">
         <Link to="/">
-          <img src="/logo.png" className="h-20" alt="Hirrd Logo" />
+          <img
+            src="/logo.jpg"
+            className="h-16 sm:h-20 lg:h-24 mx-auto block rounded-full"
+            alt="TechHire Logo"
+          />
         </Link>
 
         <div className="flex gap-8">
           <SignedOut>
-            <Button variant="outline" onClick={() => setShowSignIn(true)}>
+            {/* <Button  variant="outline" onClick={() => setShowSignIn(true)}>
+              Login
+            </Button> */}
+            <Button
+              variant="outline"
+              onClick={() => setShowSignIn(true)}
+              className="mr-4 pr-4 py-2"
+            >
               Login
             </Button>
           </SignedOut>
